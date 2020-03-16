@@ -1,0 +1,45 @@
+<html>
+<title>组件使用</title>
+
+<body>
+    <div id="app">
+        总数：{{total}}
+        <my-component @increase="handleGetTotal" @decrease="handleGetTotal"></my-component>
+    </div>
+</body>
+<script src="vue.min.js"></script>
+<script type="text/javascript">
+    Vue.component("my-component", {
+        props: ['message'],
+        template: '<div><button @click="handleIncrease">+</button><button @click="handleDecrease">-</button></div>',
+        data: function() {
+            return {
+                counter: 0
+            }
+        },
+        methods: {
+            handleIncrease: function() {
+                this.counter++;
+                this.$emit('increase', this.counter);
+            },
+            handleDecrease: function() {
+                this.counter--;
+                this.$emit('decrease', this.counter);
+            }
+        }
+    });
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            total: 0,
+        },
+        methods: {
+            handleGetTotal: function(total) {
+                this.total = total
+            }
+        }
+    })
+</script>
+
+</html>
